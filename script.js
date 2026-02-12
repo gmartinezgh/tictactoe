@@ -2,10 +2,11 @@
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let gameActive = true;
+let gameMode = 'classic';
 
 // Game History
 let history = ['', '', '', '', '', '', '', '', ''];
-let turno = 0;
+let turn = 0;
 
 // Winning combinations
 const winningConditions = [
@@ -23,10 +24,19 @@ const winningConditions = [
 const cells = document.querySelectorAll('.cell');
 const statusDisplay = document.getElementById('status');
 const resetBtn = document.getElementById('resetBtn');
+const gameModeRadios = document.querySelectorAll('input[name="gameMode"]');
 
 // Add click listeners to all cells
 cells.forEach(cell => {
     cell.addEventListener('click', handleCellClick);
+});
+
+// Add game mode change listener
+gameModeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        gameMode = e.target.value;
+        resetGame();
+    });
 });
 
 // Handle cell click
@@ -43,16 +53,19 @@ function handleCellClick(e) {
     board[index] = currentPlayer;
     cell.textContent = currentPlayer;
     cell.classList.add(currentPlayer.toLowerCase());
-    if (turno > 6) {
-        cellToForget = history[turno - 7]
-        board[cellToForget] = '';
-        document.querySelector(`[data-index="${cellToForget}"]`).textContent = '';
-        document.querySelector(`[data-index="${cellToForget}"]`).classList.add(currentPlayer.toLowerCase());
+    
+    // Apply memory-loss mechanic only in memory-loss mode
+    if (gameMode === 'memory-loss' && turn > 6) {
+        idxToForget = history[turn - 7]
+        const cellToForget = document.querySelector(`[data-index="${idxToForget}"]`)
+        board[idxToForget] = '';
+        cellToForget.textContent = '';
+        cellToForget.classList.remove('x', 'o');
     }
 
     // update history
-    history[turno] = index;
-    turno = turno + 1
+    history[turn] = index;
+    turn = turn + 1
 
     // Check for winner
     checkWinner();
@@ -72,7 +85,7 @@ function checkWinner() {
             continue;
         }
         if (board[a] === board[b] && board[b] === board[c]) {
-            statusDisplay.textContent = `Player ${board[a]} Wins! 🎉 Turn ${turno}`;
+            statusDisplay.textContent = `Player ${board[a]} Wins! 🎉 after ${turn + 1} turns`;
             gameActive = false;
             return;
         }
@@ -88,7 +101,7 @@ function checkWinner() {
 
 // Update status display
 function updateStatus() {
-    statusDisplay.textContent = `Player ${currentPlayer}'s Turn ${turno}`;
+    statusDisplay.textContent = `Player ${currentPlayer}'s`;
 }
 
 // Reset game
@@ -96,10 +109,9 @@ function resetGame() {
     board = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
-    turno = 0;
+    turn = 0;
     statusDisplay.textContent = `Player X's Turn`;
 
-    
     cells.forEach(cell => {
         cell.textContent = '';
         cell.classList.remove('x', 'o');

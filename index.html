@@ -7,23 +7,39 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Tic Tac Toe</h1>
-        <p class="status" id="status">Player X's Turn</p>
-        
-        <div class="board" id="board">
-            <div class="cell" data-index="0"></div>
-            <div class="cell" data-index="1"></div>
-            <div class="cell" data-index="2"></div>
-            <div class="cell" data-index="3"></div>
-            <div class="cell" data-index="4"></div>
-            <div class="cell" data-index="5"></div>
-            <div class="cell" data-index="6"></div>
-            <div class="cell" data-index="7"></div>
-            <div class="cell" data-index="8"></div>
+    <div class="main-wrapper">
+        <div class="container">
+            <h1>Tic Tac Toe</h1>
+            <p class="status" id="status">Player X's Turn</p>
+            
+            <div class="board" id="board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+            
+            <button class="reset-btn" id="resetBtn">New Game</button>
         </div>
-        
-        <button class="reset-btn" id="resetBtn">New Game</button>
+
+        <div class="menu-panel">
+            <h2>Game Mode</h2>
+            <div class="mode-selector">
+                <label>
+                    <input type="radio" name="gameMode" value="classic" checked>
+                    Classic
+                </label>
+                <label>
+                    <input type="radio" name="gameMode" value="memory-loss">
+                    Memory Loss
+                </label>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

@@ -3,6 +3,10 @@ let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let gameActive = true;
 
+// Game History
+let history = ['', '', '', '', '', '', '', '', ''];
+let turno = 0;
+
 // Winning combinations
 const winningConditions = [
     [0, 1, 2],
@@ -39,6 +43,16 @@ function handleCellClick(e) {
     board[index] = currentPlayer;
     cell.textContent = currentPlayer;
     cell.classList.add(currentPlayer.toLowerCase());
+    if (turno > 6) {
+        cellToForget = history[turno - 7]
+        board[cellToForget] = '';
+        document.querySelector(`[data-index="${cellToForget}"]`).textContent = '';
+        document.querySelector(`[data-index="${cellToForget}"]`).classList.add(currentPlayer.toLowerCase());
+    }
+
+    // update history
+    history[turno] = index;
+    turno = turno + 1
 
     // Check for winner
     checkWinner();
@@ -58,12 +72,13 @@ function checkWinner() {
             continue;
         }
         if (board[a] === board[b] && board[b] === board[c]) {
-            statusDisplay.textContent = `Player ${board[a]} Wins! 🎉`;
+            statusDisplay.textContent = `Player ${board[a]} Wins! 🎉 Turn ${turno}`;
             gameActive = false;
             return;
         }
     }
 
+// DOM elements
     // Check for tie
     if (!board.includes('')) {
         statusDisplay.textContent = "It's a Tie! 🤝";
@@ -73,7 +88,7 @@ function checkWinner() {
 
 // Update status display
 function updateStatus() {
-    statusDisplay.textContent = `Player ${currentPlayer}'s Turn`;
+    statusDisplay.textContent = `Player ${currentPlayer}'s Turn ${turno}`;
 }
 
 // Reset game
@@ -81,7 +96,9 @@ function resetGame() {
     board = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
+    turno = 0;
     statusDisplay.textContent = `Player X's Turn`;
+
     
     cells.forEach(cell => {
         cell.textContent = '';

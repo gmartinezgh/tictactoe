@@ -15,6 +15,9 @@ The board only displays the last 7 moves. Earlier moves disappear automatically 
 - Players alternate between X and O
 - A player wins by placing three marks in a row (horizontal, vertical, or diagonal)
 
+## How to play
+Open the file `index.html` in a web browser.
+
 ## Files
 
 - `index.html` - Game structure and layout

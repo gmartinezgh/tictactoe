@@ -2,6 +2,8 @@
 
 A modern, interactive Tic Tac Toe game with multiple game modes built with vanilla JavaScript, HTML, and CSS.
 
+![Tic Tac Toe Game Screenshot](images/game-screenshot.png)
+
 ## Game Modes
 
 ### Classic

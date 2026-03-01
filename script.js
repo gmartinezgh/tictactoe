@@ -7,6 +7,7 @@ let gameMode = 'classic';
 // Game History
 let history = ['', '', '', '', '', '', '', '', ''];
 let turn = 0;
+const forgetAfter = 6;
 
 // Winning combinations
 const winningConditions = [
@@ -54,9 +55,8 @@ function handleCellClick(e) {
     cell.textContent = currentPlayer;
     cell.classList.add(currentPlayer.toLowerCase());
     
-    // Apply memory-loss mechanic only in memory-loss mode
-    if (gameMode === 'memory-loss' && turn > 6) {
-        idxToForget = history[turn - 7]
+    if (gameMode === 'memory-loss' && turn >= forgetAfter) {
+        idxToForget = history[turn - forgetAfter]
         const cellToForget = document.querySelector(`[data-index="${idxToForget}"]`)
         board[idxToForget] = '';
         cellToForget.textContent = '';

@@ -2,13 +2,10 @@
 let board = ['', '', '', '', '', '', '', '', ''];
 let currentPlayer = 'X';
 let gameActive = true;
-let gameMode = 'classic';
-let numPlayers = 1;
 
 // Bot variables
 let botPlayer = currentPlayer === 'X' ? 'O' : 'X';
 let rank = ['', '', '', '', '', '', '', '', ''];
-let difficulty = 0;
 
 // Game History
 let history = ['', '', '', '', '', '', '', '', ''];
@@ -40,25 +37,25 @@ cells.forEach(cell => {
     cell.addEventListener('click', handleCellClick);
 });
 
+
 // Game mode change listener
 numPlayersRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
-        numPlayers = e.target.value;
         resetGame();
     });
 });
 gameModeRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
-        gameMode = e.target.value;
         resetGame();
     });
 });
 difficultyRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
-        difficulty = e.target.value;
         resetGame();
     });
 });
+
+resetGame();
 
 // Handle cell click
 function handleCellClick(e) {
@@ -227,12 +224,14 @@ function updateStatus(player) {
 
 // Reset game
 function resetGame() {
+    numPlayers = document.querySelector('input[name="numPlayers"]:checked').value;
+    gameMode = document.querySelector('input[name="gameMode"]:checked').value;
+    difficulty = document.querySelector('input[name="difficulty"]:checked').value;
     board = ['', '', '', '', '', '', '', '', ''];
     currentPlayer = 'X';
     gameActive = true;
     move = 0;
     statusDisplay.textContent = `Player X's Turn`;
-
     cells.forEach(cell => {
         cell.textContent = '';
         cell.classList.remove('x', 'o');
